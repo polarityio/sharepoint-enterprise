@@ -1,7 +1,7 @@
 {
   "main": "./integration.js",
   "name": "sharepoint_enterprise",
-  "version": "3.0.0-alpha",
+  "version": "3.0.1-alpha",
   "private": true,
   "author": "Polarity",
   "dependencies": {
