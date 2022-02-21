@@ -70,7 +70,7 @@ function _getSummaryTags(results) {
   const tags = [];
   results.forEach((result) => {
     if(result.FileExtension === 'aspx'){
-      tags.push(`Page: ${result.Title.substring}`);
+      tags.push(`Page: ${result.Title}`);
     } else {
       tags.push(`File: ${result.Title}.${result.FileExtension}`);
     }
