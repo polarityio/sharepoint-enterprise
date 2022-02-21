@@ -69,7 +69,7 @@ function setupSharePointLibrary({ url, onpremUsername: username, onpremPassword:
 function _getSummaryTags(results) {
   const tags = [];
   results.forEach((result) => {
-    if(result.FileExtension === 'aspx'){
+    if (result.FileExtension === 'aspx') {
       tags.push(`Page: ${result.Title}`);
     } else {
       tags.push(`File: ${result.Title}.${result.FileExtension}`);
@@ -132,13 +132,20 @@ async function doLookup(entities, options, cb) {
   try {
     await async.each(entities, async (entity) => {
       const searchResults = await search(entity.value, options);
-      lookupResults.push({
-        entity,
-        data: {
-          summary: _getSummaryTags(searchResults),
-          details: formatSearchResults(searchResults, options)
-        }
-      });
+      if (searchResults.length === 0) {
+        lookupResults.push({
+          entity,
+          data: null
+        });
+      } else {
+        lookupResults.push({
+          entity,
+          data: {
+            summary: _getSummaryTags(searchResults),
+            details: formatSearchResults(searchResults, options)
+          }
+        });
+      }
     });
   } catch (lookupError) {
     Logger.error(lookupError, 'doLookupError');
