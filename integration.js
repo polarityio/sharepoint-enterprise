@@ -67,7 +67,11 @@ function setupSharePointLibrary({ url, onpremUsername: username, onpremPassword:
 function _getSummaryTags(results) {
   const tags = [];
   results.forEach((result) => {
-    tags.push(result.Title + '.' + result.FileExtension);
+    if(result.FileExtension === 'aspx'){
+      tags.push(`Page: ${result.Title.substring}`);
+    } else {
+      tags.push(`File: ${result.Title}.${result.FileExtension}`);
+    }
   });
   return tags;
 }
