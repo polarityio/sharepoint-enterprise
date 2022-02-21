@@ -17,7 +17,9 @@ const fileTypes = {
   doc: 'file-word',
   ppt: 'file-powerpoint',
   pptx: 'file-powerpoint',
-  html: 'file'
+  html: 'file',
+  json: 'file',
+  log: 'file'
 };
 
 let optionsHash = '';
