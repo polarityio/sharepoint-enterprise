@@ -67,15 +67,16 @@ function setupSharePointLibrary({ url, onpremUsername: username, onpremPassword:
 }
 
 function _getSummaryTags(results) {
-  const tags = [];
+  // Use a set to dedupe tags
+  const tags = new Set();
   results.forEach((result) => {
     if (result.FileExtension === 'aspx') {
-      tags.push(`Page: ${result.Title}`);
+      tags.add(`Page: ${result.Title}`);
     } else {
-      tags.push(`File: ${result.Title}.${result.FileExtension}`);
+      tags.add(`File: ${result.Title}.${result.FileExtension}`);
     }
   });
-  return tags;
+  return [...tags];
 }
 
 function formatSearchResults(searchResults, options) {
