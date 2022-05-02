@@ -25,7 +25,7 @@ module.exports = {
    * @optional
    */
   description: 'Search documents in Sharepoint on-premise 2013 and 2016 for IPs, hashes, domains and emails.',
-  entityTypes: ['ip', 'hash', 'domain', 'email'],
+  entityTypes: ['ip', 'hash', 'domain', 'email', 'url', 'cve'],
   /**
    * An array of style files (css or less) that will be included for your integration. Any styles specified in
    * the below files can be used in your custom template.
