@@ -4,6 +4,7 @@ const xbytes = require('xbytes');
 const { sp } = require('@pnp/sp-commonjs');
 const { PnpNode } = require('sp-pnp-node');
 
+const MAX_TAGS = 5;
 const fileTypes = {
   pdf: 'file-pdf',
   html: 'file-code',
@@ -17,9 +18,9 @@ const fileTypes = {
   doc: 'file-word',
   ppt: 'file-powerpoint',
   pptx: 'file-powerpoint',
-  html: 'file',
   json: 'file',
-  log: 'file'
+  log: 'file',
+  aspx: 'microsoft'
 };
 
 let optionsHash = '';
@@ -31,7 +32,6 @@ async function search(searchTerm, options) {
     RowLimit: 10,
     EnableInterleaving: true
   });
-  Logger.debug({ result: result.PrimarySearchResults }, 'Search Results');
   return result.PrimarySearchResults;
 }
 
@@ -76,38 +76,54 @@ function _getSummaryTags(results) {
       tags.add(`File: ${result.Title}.${result.FileExtension}`);
     }
   });
-  return [...tags];
+  const tagList = [...tags];
+  const slicedTagList = tagList.slice(0, MAX_TAGS);
+  if (slicedTagList.length < tagList.length) {
+    slicedTagList.push(`+${tagList.length - slicedTagList.length} results`);
+  }
+  return slicedTagList;
 }
 
 function formatSearchResults(searchResults, options) {
-  return searchResults.map((result) => {
-    const formattedResult = { ...result };
+  return searchResults.reduce(
+    (accum, result) => {
+      const formattedResult = { ...result };
 
-    if (formattedResult.HitHighlightedSummary) {
-      formattedResult.HitHighlightedSummary = formattedResult.HitHighlightedSummary.replace(/c0/g, 'strong').replace(
-        /<ddd\/>/g,
-        '&#8230;'
-      );
-    }
-
-    if (formattedResult.FileType) {
-      if (fileTypes[formattedResult.FileType]) {
-        formattedResult._icon = fileTypes[formattedResult.FileType];
-      } else {
-        formattedResult._icon = 'file';
+      if (formattedResult.HitHighlightedSummary) {
+        formattedResult.HitHighlightedSummary = formattedResult.HitHighlightedSummary.replace(/c0/g, 'strong').replace(
+          /<ddd\/>/g,
+          '&#8230;'
+        );
       }
-    }
 
-    if (formattedResult.Size) {
-      formattedResult._sizeHumanReadable = xbytes(formattedResult.Size);
-    }
+      if (formattedResult.FileType) {
+        if (fileTypes[formattedResult.FileType]) {
+          formattedResult._icon = fileTypes[formattedResult.FileType];
+        } else {
+          formattedResult._icon = 'file';
+        }
+      }
 
-    if (formattedResult.ParentLink) {
-      formattedResult._containingFolder = url.parse(formattedResult.ParentLink).pathname;
-    }
+      if (formattedResult.Size) {
+        formattedResult._sizeHumanReadable = xbytes(formattedResult.Size);
+      }
 
-    return formattedResult;
-  });
+      if (formattedResult.ParentLink) {
+        formattedResult._containingFolder = url.parse(formattedResult.ParentLink).pathname;
+      }
+
+      if (formattedResult.FileExtension === 'aspx') {
+        accum.pages.push(formattedResult);
+      } else {
+        accum.documents.push(formattedResult);
+      }
+      return accum;
+    },
+    {
+      pages: [],
+      documents: []
+    }
+  );
 }
 
 function errorToPojo(err, detail) {
@@ -139,11 +155,13 @@ async function doLookup(entities, options, cb) {
           data: null
         });
       } else {
+        const formattedSearchResults = formatSearchResults(searchResults, options);
+        Logger.debug({ result: formattedSearchResults }, 'Formatted Search Results');
         lookupResults.push({
           entity,
           data: {
             summary: _getSummaryTags(searchResults),
-            details: formatSearchResults(searchResults, options)
+            details: formattedSearchResults
           }
         });
       }
