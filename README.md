@@ -6,7 +6,7 @@ For more information on Sharepoint, please visit: [official website] (https://pr
 
 Check out the integration in action:
 
-![sharepoint](https://user-images.githubusercontent.com/22529325/55797620-ed0c9900-5a9a-11e9-8438-b9ea09136081.gif)
+<img src="assets/overlay.png" width="50%">
 
 ## Configuring Sharepoint
 
