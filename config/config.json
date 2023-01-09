@@ -1,0 +1,92 @@
+{
+  "name": "Sharepoint Enterprise",
+  "acronym": "SP",
+  "defaultColor": "light-gray",
+  "onDemandOnly": true,
+  "description": "Search documents in Sharepoint on-premise 2013 and 2016 for IPs, hashes, domains and emails.",
+  "entityTypes": [
+    "hash",
+    "domain",
+    "email",
+    "url",
+    "cve"
+  ],
+  "styles": [
+    "./styles/sharepoint.less"
+  ],
+  "block": {
+    "component": {
+      "file": "./components/block.js"
+    },
+    "template": {
+      "file": "./templates/block.hbs"
+    }
+  },
+  "request": {
+    "cert": "",
+    "key": "",
+    "passphrase": "",
+    "ca": "",
+    "proxy": "",
+    "rejectUnauthorized": true
+  },
+  "logging": {
+    "level": "info"
+  },
+  "options": [
+    {
+      "key": "url",
+      "name": "Sharepoint Site Url",
+      "description": "The sharepoint Site URL to use for querying data.  The URL should include the scheme (https://) and port is necessary.  As an example, for a site called \"mycompany\", this option might be set to \"https://internal.sharepoint.corp/sites/mycompany\".",
+      "default": "",
+      "type": "text",
+      "userCanEdit": false,
+      "adminOnly": true
+    },
+    {
+      "key": "onpremUsername",
+      "name": "Username",
+      "description": "The username of the account you wish to use to connect to your Sharepoint Onprem Enterprise instance.",
+      "default": "",
+      "type": "text",
+      "userCanEdit": false,
+      "adminOnly": true
+    },
+    {
+      "key": "onpremPassword",
+      "name": "Password",
+      "description": "The password for the given domain username.",
+      "default": "",
+      "type": "password",
+      "userCanEdit": false,
+      "adminOnly": true
+    },
+    {
+      "key": "onpremDomain",
+      "name": "Domain",
+      "description": "The domain for the given username and password.",
+      "default": "",
+      "type": "text",
+      "userCanEdit": false,
+      "adminOnly": true
+    },
+    {
+      "key": "exactMatch",
+      "name": "Exact Match Search",
+      "description": "If checked, the search will look for exact matches.  This option is enabled by default.",
+      "default": true,
+      "type": "boolean",
+      "userCanEdit": false,
+      "adminOnly": true
+    },
+    {
+      "key": "debug",
+      "name": "Enable debug output",
+      "description": "If checked, the integration will output all document fields",
+      "default": false,
+      "type": "boolean",
+      "userCanEdit": true,
+      "adminOnly": false
+    }
+  ]
+}
