@@ -8,7 +8,7 @@
     "async": "^3.2.3",
     "xbytes": "^1.7.0",
     "@pnp/nodejs-commonjs": "^2.13.0",
-    "@pnp/sp-commonjs": "^2.13.0",
+    "@pnp/sp-commonjs": "^2.15.0",
     "sp-pnp-node": "^3.0.1"
   }
 }
