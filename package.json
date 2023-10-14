@@ -5,7 +5,7 @@
   "private": true,
   "author": "Polarity",
   "dependencies": {
-    "async": "^3.2.3",
+    "async": "^3.2.4",
     "xbytes": "^1.7.0",
     "@pnp/nodejs-commonjs": "^2.13.0",
     "@pnp/sp-commonjs": "^2.13.0",
