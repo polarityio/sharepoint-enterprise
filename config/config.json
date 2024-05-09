@@ -6,7 +6,11 @@
   "onDemandOnly": true,
   "description": "Search documents in Sharepoint on-premise 2013 and 2016 for IPs, hashes, domains and emails.",
   "entityTypes": [
-    "hash",
+    "IPv4",
+    "IPv6",
+    "MD5",
+    "SHA1",
+    "SHA256",
     "domain",
     "email",
     "url",
