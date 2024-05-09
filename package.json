@@ -1,14 +1,14 @@
 {
   "name": "sharepoint_enterprise",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "main": "./integration.js",
   "private": true,
   "author": "Polarity",
   "dependencies": {
-    "async": "^3.2.3",
-    "xbytes": "^1.7.0",
-    "@pnp/nodejs-commonjs": "^2.13.0",
-    "@pnp/sp-commonjs": "^2.13.0",
+    "async": "^3.2.5",
+    "xbytes": "^1.8.0",
+    "@pnp/nodejs-commonjs": "^2.15.0",
+    "@pnp/sp-commonjs": "^2.15.0",
     "sp-pnp-node": "^3.0.1"
   }
 }
